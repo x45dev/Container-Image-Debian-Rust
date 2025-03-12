@@ -1,0 +1,12 @@
+# ./maturin_test/Cargo.toml
+[package]
+name = "maturin_test_package"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "maturin_test_package"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.20.0", features = ["extension-module"] }

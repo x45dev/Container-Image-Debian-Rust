@@ -1,0 +1,13 @@
+# docker-compose.yml
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    #   target: builder # Uncomment to build only the builder stage
+    #   target: runtime # Uncomment for debugging just the runtime
+    volumes:
+      - .:/app:delegated # Mount the current directory (for development).  "delegated" improves performance on macOS/Windows.
+    # command: ["sleep", "infinity"]  # Useful for debugging. Keeps the container running.
+    # environment:  # Uncomment to override environment variables.
+    #   - RUST_BACKTRACE=1

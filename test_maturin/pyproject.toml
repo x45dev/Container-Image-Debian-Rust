@@ -1,0 +1,8 @@
+# ./maturin_test/pyproject.toml
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "maturin_test_package"
+requires-python = ">=3.7"
