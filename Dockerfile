@@ -50,7 +50,7 @@ COPY --from=builder /root/.cargo /root/.cargo
 COPY --from=builder /root/.rustup /root/.rustup
 COPY --from=builder /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu
 
-# Set environment variables.
+# Configure environment variables.
 ENV RUSTUP_HOME=/root/.rustup
 ENV CARGO_HOME=/root/.cargo
 ENV PATH="/root/.cargo/bin:${PATH}"
@@ -58,12 +58,14 @@ ENV RUST_VERSION=1.83.0
 
 # Create a non-root user.
 RUN groupadd -r appuser && useradd -r -g appuser appuser
-RUN chown -R appuser:appuser /root/.cargo /root/.rustup
+RUN chown -R appuser:appuser /root/.cargo /root/.rustup \
+  && chmod -R u+rwx /root/.cargo /root/.rustup
 
 # --- Cargo Smoke Test ---
 WORKDIR /app
 USER appuser
 COPY --chown=appuser:appuser ./test_cargo /app/test_cargo
+# FIXME: CARGO NOT EXECUTABLE
 RUN cd test_cargo && cargo build --release && ./target/release/hello-world
 
 # --- Maturin Smoke Test ---
